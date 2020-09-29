@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
       <script>
         window.onload = function() {
-          // functions that run after page loads
-        <div id="greeting">
+        // functions that run after page loads
         displayGreeting();
           fetchWeather();
         }
@@ -24,24 +23,24 @@
             description = "evening";
           }
           document.getElementById("greeting").innerHTML = "Good " + description;
-        }
-        <div id="greeting"></div>
+       }
         // get weather data from openweathermap and display the current temp
-        <div id="weather">
-        function fetchWeather() {
+      function fetchWeather() {
           fetch("https://api.openweathermap.org/data/2.5/weather?zip=85719,US&appid=209169c2f2eb1838a1bf4bdfc6c0a8a0&units=imperial")
           .then(function(resp) { return resp.json() })
           .then(function(data) {
-            document.getElementById("weather").innerHTML = "It is currently"+data.main.temp+"in Tucson, Arizona";
+            document.getElementById("weather").innerHTML = "It is currently " + data.main.temp + "&deg; in Tucson, AZ";
           })
           .catch(function() {
             document.getElementById("weather").innerHTML = "Error in fetchWeather function";
           });
         }
-        <div id="weather"></div>
+
       </script>
-  </head>
+    </head>
   <body>
+    <div id="greeting"></div>
+    <div id="weather"></div>
     <center>
       <div class="name_container">Trevor Williamson</div>
       <div class="content_container"</div>
