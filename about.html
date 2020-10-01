@@ -4,6 +4,7 @@
     <title>About Me</title>
     <link rel="stylesheet" href="site.css">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <script src="https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.1.js"></script>
       <script>
         window.onload = function() {
         // functions that run after page loads
@@ -23,9 +24,9 @@
             description = "evening";
           }
           document.getElementById("greeting").innerHTML = "Good " + description;
-       }
+        }
         // get weather data from openweathermap and display the current temp
-      function fetchWeather() {
+        function fetchWeather() {
           fetch("https://api.openweathermap.org/data/2.5/weather?zip=85719,US&appid=209169c2f2eb1838a1bf4bdfc6c0a8a0&units=imperial")
           .then(function(resp) { return resp.json() })
           .then(function(data) {
@@ -35,12 +36,30 @@
             document.getElementById("weather").innerHTML = "Error in fetchWeather function";
           });
         }
-
+        function displayRSSFeed() {
+        // fetch an RSS feed and display the title and description
+        var origURL = 'https://rss.nytimes.com/services/xml/rss/nyt/Sports.xml';
+        // feednami doesn't like & so replace with %26
+        var replacedURL = origURL.replace(/&/g, "%26");
+        feednami.load(replacedURL,function(result) {
+          if (result.error) {
+            console.log(result.error);
+          } else {
+            var entries = result.feed.entries
+            for (var i = 0; i < entries.length; i++) {
+              var entry = entries[i];
+              let divElement = '<div class="rss_title"><a href="' + entry.link + '" target="_blank">' + entry.title + '</a></div><div class="rss_description">' + entry.description + '</div>';
+              document.getElementById("rss_items").innerHTML += divElement;
+              }
+            }
+          });
+        }
       </script>
     </head>
   <body>
     <div id="greeting"></div>
     <div id="weather"></div>
+    <div id="rss_items"></div>
     <center>
       <div class="name_container">Trevor Williamson</div>
       <div class="content_container"</div>
