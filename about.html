@@ -4,6 +4,12 @@
     <title>About Me</title>
     <link rel="stylesheet" href="site.css">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
     <script src="https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.1.js"></script>
       <script>
         window.onload = function() {
@@ -11,7 +17,27 @@
         displayGreeting();
            fetchWeather();
          displayRSSFeed();
-              listSheet();
+         var mymap = drawMap ();
+         listSheet(mymap);
+        }
+        function drawMap() {
+          var mymap = L.map('mapid') .setView([32.2380622,-110.9250296], 12);
+          L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>', maxZoom: 18,
+          id: 'mapbox/streets-v11', tileSize: 512, zoomOffset: -1, accessToken: 'pk.eyJ1IjoidHJldm9yMTUiLCJhIjoiY2tnNzd1Y245MDRvZzJ5b2E5aTl2MjVwYiJ9.cAYb4jxu_b8CqkYeI6pxNA'}).addTo(mymap);
+          return mymap;
+          var marker1 = L.marker([32.2281273,-110.9532047]).addTo(mymap);
+          marker1.bindPopup("<b>Highland Commons</b><br>Testing Location");
+          var marker2 = L.marker([32.2035241,-110.9305869]).addTo(mymap);
+          marker2.bindPopup("<b>Kino Event Center</b><br>Testing Location");
+          var marker3 = L.marker([32.2034825,-110.8665263]).addTo(mymap);
+          marker3.bindPopup("<b>Morris K. Udall Park and Recreation Center</b><br>Testing Location");
+          var marker4 = L.marker([32.2849377,-111.0267162]).addTo(mymap);
+          marker4.bindPopup("<b>Ellie Towne Flowing Wells Community Center</b><br>Testing Location");
+          var marker5 = L.marker([32.1605627,-110.9715843]).addTo(mymap);
+          marker5.bindPopup("<b>El Pueblo Center</b><br>Testing Location");
+        }
+        function addPin(mymap, lat, lon, name) {
+          L.marker([lat, lon]) .addTo(mymap) .bindPopup(name);
         }
         // display good morning, afternoon or evening based on the time
         function displayGreeting() {
@@ -56,9 +82,9 @@
             }
           });
         }
-        function listSheet() {
+        function listSheet(mymap) {
         // list google sheet rows
-          fetch('https://api.sheetson.com/v2/sheets/Sheet1', {
+          fetch('https://api.sheetson.com/v2/sheets/Sheet1?no-cache=true', {
             withCredentials: true,
             headers: {
               'Content-Type': 'application/json',
@@ -72,6 +98,7 @@
               var result = data.results[i];
               let divElement = '<div class="cell">' + '<div class="cell_name">' + result.name + '</div>' + '<div class="cell_address">' + result.address + '</div>' + '<div class="cell_url"><a href="' + result.url + '">' + result.url + '</a></div>' + '<div class="cell_phone"><a href="tel://' + result.phone + '">' + result.phone + '</a></div>' + '</div>';
               document.getElementById("sheet").innerHTML += divElement;
+              addPin(mymap, result.lat, result.lon, '<strong>' + result.name + '</strong><br>' + result.address);
             }
           })
           .catch(function() {
@@ -85,6 +112,7 @@
     <div id="weather"></div>
     <div id="rss_items"></div>
     <h2>COVID-19 Testing Locations</h2>
+    <div id="mapid"></div>
     <div id="sheet"></div>
     <center>
       <div class="name_container">Trevor Williamson</div>
