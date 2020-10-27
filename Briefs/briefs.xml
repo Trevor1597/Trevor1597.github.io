@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+  <title>Trevor's Flash Briefings</title>
+  <link>https://trevor1597.github.io/about.html</link>
+  <description>Flash Briefings</description>
+  <item>
+    <pubDate>Tue, 27 Oct 2020 09:00:00 -0700</pubDate>
+    <title>Recording 1</title>
+    <link>https://trevor1597.github.io/about.html</link>
+    <description>Recording 1</description>
+    <enclosure url="https://trevor1597.github.io/briefs/Recording.m4a" type="audio/mpeg" length="1401017"></enclosure>
+    <guid isPermaLink="false">https://trevor1597.github.io/briefs/Recording.m4a</guid>
+  </item>
+  <item>
+    <pubDate>Tue, 27 Oct 2020 09:00:00 -0700</pubDate>
+    <title>Recording 2</title>
+    <link>https://trevor1597.github.io/about.html</link>
+    <description>Recording 2</description>
+    <enclosure url="https://trevor1597.github.io/briefs/Recording2.m4a" type="audio/mpeg" length="872448"></enclosure>
+    <guid isPermaLink="false">https://trevor1597.github.io/briefs/Recording2.m4a</guid>
+  </item>
+</channel>
+</rss>
